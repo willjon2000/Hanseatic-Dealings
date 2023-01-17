@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('coins');
-            $table->foreignId('userID')->constrained('users');
             $table->integer('capacity');
+            $table->foreignId('userID')->constrained('users');
             $table->timestamps();
         });
     }

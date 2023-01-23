@@ -1,14 +1,13 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleSheet, Text, SafeAreaView, Animated, Easing, ImageBackground, View } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, Animated, Easing, ImageBackground, View, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import { hideAsync } from 'expo-splash-screen'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const backgroundImage = require('../assets/big_map.png')
 
 export default function Trade({ route, navigation }: NativeStackScreenProps<any>) {
-  const initialValue = 0;
+  /*const initialValue = 0;
   const translateValue = useRef(new Animated.Value(initialValue)).current;
   
   const translate = () => {
@@ -32,7 +31,7 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
   });
 
   const AnimetedImage = Animated.createAnimatedComponent(ImageBackground);
-
+*/
   hideAsync()
 
   return (
@@ -49,12 +48,12 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
           <Text style={{ fontSize: 30 }}>Settings</Text>
         </TouchableOpacity>
       </SafeAreaView>
-      <AnimetedImage 
-        resizeMode="repeat" 
+      {/*<AnimetedImage
+        resizeMode="repeat"
         style={[styles.background, {
           transform: [ { translateX: translateAnimation }, { translateY: translateAnimation } ],
         }]}
-      source={backgroundImage} />
+      source={backgroundImage} />*/}
       <StatusBar style="dark" />
     </View>
   )

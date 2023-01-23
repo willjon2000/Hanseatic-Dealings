@@ -17,7 +17,8 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->unique()->randomElement(['beer', 'bricks', 'cloth', 'fish', 'grain', 'hemp', 'honey', 'iron', 'leather', 'meat', 'pig iron', 'pitch', 'pottery', 'salt', 'skins', 'spices', 'timber', 'whale oil', 'wine', 'wool']),
+            'price' => fake()->numberBetween(100, 900)
         ];
     }
 }

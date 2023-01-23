@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Ship;
+use App\Models\User;
+use App\Models\Item;
 
 class ShipSeeder extends Seeder
 {
@@ -14,6 +17,15 @@ class ShipSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $users = User::all();
+
+        for($ii=0; $ii < count($users); $ii++) { 
+            Ship::factory()->for(User::factory())->create()->each(function($ship) {
+                $randomItems = Item::all()->random(raind(1, 5))->pluck('id');
+                for($i=0; $i < count($randomItems); $i++) { 
+                    $ship->items()->attach($randomItems[$i], ['amount' => fake()->numberBetween(1, 10)]);
+                }
+            });
+        }
     }
 }

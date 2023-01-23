@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('amount');
             $table->foreignId('shipID')->constrained('ships');
             $table->foreignId('itemID')->constrained('items');
-            $table->timestamps();
         });
     }
 

@@ -17,7 +17,9 @@ class ShipFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->unique()->name(),
+            'capacity' => fake()->numberBetween(1000, 2000),
+            'coins' => fake()->numberBetween(500, 1000)
         ];
     }
 }

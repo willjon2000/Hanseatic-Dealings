@@ -16,6 +16,6 @@ class Outpost extends Model
 
     public function items(): BelongsToMany
     {
-        return $this->belongsToMany(Item::class,'outpost_items','outpostID','itemID');
+        return $this->belongsToMany(Item::class,'outpost_items','outpostID','itemID')->withPivot('amount', 'producer');
     }
 }

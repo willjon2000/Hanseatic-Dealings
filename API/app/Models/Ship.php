@@ -19,11 +19,11 @@ class Ship extends Model
 
     public function user(): BelongsTo
     {
-        return  $this->belongsTo(Ship::class);
+        return  $this->belongsTo(Ship::class, 'userID');
     }
 
     public function items(): BelongsToMany
     {
-        return $this->belongsToMany(Item::class,'ship_items','shipID','itemID');
+        return $this->belongsToMany(Item::class,'ship_items','shipID','itemID')->withPivot('amount');
     }
 }

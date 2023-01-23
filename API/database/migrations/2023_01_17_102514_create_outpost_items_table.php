@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->foreignId('outpostID')->constrained('outposts');
             $table->foreignId('itemID')->constrained('items');
-            $table->timestamps();
+            $table->boolean('producer');
         });
     }
 

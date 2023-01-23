@@ -34,7 +34,7 @@ class LoginController extends Controller
         if (!Auth::attempt($request->only('username','password'))){
             return response([
                 'message' => 'invalid credentials'
-            ],Response::HTTP_UNAUTHORIZED);
+            ], Response::HTTP_UNAUTHORIZED);
         }
         $user = Auth::user();
 

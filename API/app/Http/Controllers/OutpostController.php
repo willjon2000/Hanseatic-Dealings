@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Outpost;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class OutpostController extends Controller
      */
     public function index()
     {
-        //
+        return Outpost::get();
     }
 
     /**

@@ -19,3 +19,14 @@ Route::post('login',[\App\Http\Controllers\auth\LoginController::class, 'login']
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:sanctum')->get('/user/{id}/ships',[\App\Http\Controllers\UserShipController::class, 'show']);
+
+Route::middleware('auth:sanctum')->get('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'show']);
+Route::middleware('auth:sanctum')->get('/ship/{id}/items',[\App\Http\Controllers\ShipItemController::class, 'show']);
+
+Route::middleware('auth:sanctum')->get('/items',[\App\Http\Controllers\ItemController::class, 'index']);
+
+Route::middleware('auth:sanctum')->get('/outposts',[\App\Http\Controllers\OutpostController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/outpost/{id}/items',[\App\Http\Controllers\OutpostItemController::class, 'show']);
+Route::middleware('auth:sanctum')->post('/outpost/{id}/item/{item_id}/buy',[\App\Http\Controllers\OutpostItemController::class, 'buy']);
+Route::middleware('auth:sanctum')->post('/outpost/{id}/item/{item_id}/sell',[\App\Http\Controllers\OutpostItemController::class, 'sell']);

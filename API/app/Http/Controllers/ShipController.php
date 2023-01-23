@@ -1,41 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Ship;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShipController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $ship = Ship::find($id);
+
+        if($request->user()->id !== $ship->userID)
+            return response([
+                'message' => 'You do not have access to performe this action'
+            ], Response::HTTP_UNAUTHORIZED);
+
+        return $ship;
     }
 
     /**
@@ -47,7 +36,22 @@ class ShipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'string'
+        ]);
+
+        $ship = Ship::find($id);
+
+        if($request->user()->id !== $ship->userID)
+            return response([
+                'message' => 'You do not have access to performe this action'
+            ], Response::HTTP_UNAUTHORIZED);
+ 
+        $ship->name = $request->name;
+        
+        $ship->save();
+
+        return $ship;
     }
 
     /**
@@ -58,6 +62,15 @@ class ShipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ship = Ship::find($id);
+
+        if($request->user()->id !== $ship->userID)
+            return response([
+                'message' => 'You do not have access to performe this action'
+            ], Response::HTTP_UNAUTHORIZED);
+        
+        $ship->destroy();
+
+        return [ 'success' => true ];
     }
 }

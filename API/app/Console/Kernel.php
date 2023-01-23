@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Outpost;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +16,24 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $outposts = Outpost::all();
+            foreach ($outposts as $key => $outpost) {
+                $outpostItems = $outpost->items;
+                
+                foreach ($outpostItems as $key => $item) {
+                    if($item->pivot->producer == 0){
+                        if($item->pivot->amount < 0)
+                            $item->pivot->amount = $item->pivot->amount - rand(1, 4);
+                    }else{
+                        if($item->pivot->amount < 200)
+                            $item->pivot->amount = $item->pivot->amount + rand(2, 6);
+                    }
+
+                    $item->save();
+                }
+            }
+        })->everyFiveMinutes();
     }
 
     /**

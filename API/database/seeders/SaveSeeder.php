@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\SaveGame;
+use Database\Factories\SaveGameFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TradeHistorySeeder extends Seeder
+class SaveSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +16,6 @@ class TradeHistorySeeder extends Seeder
      */
     public function run()
     {
-        //
+        SaveGame::factory(4)->create();
     }
 }

@@ -34,6 +34,6 @@ class User extends Authenticatable
 
     public function ships(): HasMany
     {
-        return $this->hasMany(Ship::class,'id');
+        return $this->hasMany(Ship::class,'userID');
     }
 }

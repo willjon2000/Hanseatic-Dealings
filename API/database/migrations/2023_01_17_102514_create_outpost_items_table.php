@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->foreignId('outpostID')->constrained('outposts');
             $table->foreignId('itemID')->constrained('items');
+            $table->foreignId('saveGameID')->constrained('save_games');
             $table->boolean('producer');
         });
     }

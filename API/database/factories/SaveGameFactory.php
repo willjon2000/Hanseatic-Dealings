@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ship>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SaveGame>
  */
-class ShipFactory extends Factory
+class SaveGameFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,8 @@ class ShipFactory extends Factory
     {
         return [
             'name' => fake()->unique()->name(),
-            'capacity' => fake()->numberBetween(200, 300),
-            'coins' => fake()->numberBetween(500, 1000),
+            'online' => fake()->randomElement([true, true, true, true]),
+            'timeInGame' => fake()->dateTimeBetween(100,900)
         ];
     }
 }

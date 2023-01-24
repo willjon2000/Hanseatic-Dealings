@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\SaveGame;
 use App\Models\Ship;
 
 use Illuminate\Http\Request;
@@ -8,6 +9,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShipController extends Controller
 {
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request){
+
+        $save = SaveGame::find($request->input('saveGameID'));
+
+        if ($save){
+            Ship::factory()->create();
+
+        }else{
+
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -46,9 +65,9 @@ class ShipController extends Controller
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
- 
+
         $ship->name = $request->name;
-        
+
         $ship->save();
 
         return $ship;
@@ -58,9 +77,10 @@ class ShipController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($request,$id)
     {
         $ship = Ship::find($id);
 
@@ -68,9 +88,9 @@ class ShipController extends Controller
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
-        
+
         $ship->destroy();
 
-        return [ 'success' => true ];
+        return response([ 'success' => true ]);
     }
 }

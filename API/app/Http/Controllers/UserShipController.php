@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-use App\Models\Ship;
 
 use Illuminate\Http\Request;
 
@@ -28,6 +27,7 @@ class UserShipController extends Controller
      */
     public function show($id)
     {
-        return User::find($id)->ships;
+        $user = User::find($id);
+        return $user->ships;
     }
 }

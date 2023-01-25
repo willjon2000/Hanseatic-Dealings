@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('auth:sanctum')->get('/user/{id}/ships',[\App\Http\Controllers\UserShipController::class, 'show']);
 
+Route::middleware('auth:sanctum')->post('/ships',[\App\Http\Controllers\ShipController::class, 'create']);
 Route::middleware('auth:sanctum')->get('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/ship/{id}/items',[\App\Http\Controllers\ShipItemController::class, 'show']);
 

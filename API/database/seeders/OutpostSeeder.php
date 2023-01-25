@@ -23,7 +23,7 @@ class OutpostSeeder extends Seeder
             for($l=0; $l < count($randomsaves); $l++){
                 for($i=0; $i < count($randomItems); $i++) {
                     $producer = fake()->boolean(15);
-                    $outpost->items()->attach($randomItems[$i], ["saveGameID" => $randomsaves[$l], 'producer' => $producer, 'amount' => $producer ? fake()->numberBetween(10, 70) : fake()->numberBetween(120, 200)]);
+                    $outpost->items()->attach($randomItems[$i], ["saveGameID" => $randomsaves[$l], 'producer' => $producer, 'amount' => $producer ? fake()->numberBetween(10, 70) : fake()->numberBetween(80, 170)]);
                 }
 
             }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\SaveGame;
+use App\Models\Outpost;
+use App\Models\Item;
 use App\Models\Ship;
 
 use Illuminate\Http\Request;
@@ -19,12 +21,37 @@ class ShipController extends Controller
 
         $save = SaveGame::find($request->input('saveGameID'));
 
-        if ($save){
-            Ship::factory()->create();
+        if (!$save){
+            $save = new SaveGame();
+            $save->name = 'private';
+            $save->online = false;
+            $save->timeInGame = fake()->dateTimeBetween(100,900);
 
-        }else{
+            $save->save();
 
+            $outposts = Outpost::get();
+            foreach ($outposts as $key => $outpost) {
+                $randomItems = Item::all()->random(rand(4,17))->pluck('id');
+                for($i=0; $i < count($randomItems); $i++) {
+                    $producer = fake()->boolean(15);
+                    $outpost->items()->attach($randomItems[$i], ["saveGameID" => $save->id, 'producer' => $producer, 'amount' => $producer ? fake()->numberBetween(10, 70) : fake()->numberBetween(80, 170)]);
+                }
+            }
         }
+
+
+
+        $ship = new Ship();
+
+        $ship->userID = $request->user()->id;
+        $ship->saveGameID = $save->id;
+        $ship->name = $request->input('name');
+        $ship->capacity = fake()->numberBetween(200, 300);
+        $ship->coins = fake()->numberBetween(500, 900);
+        
+        $ship->save();
+
+        return $ship;
     }
 
     /**

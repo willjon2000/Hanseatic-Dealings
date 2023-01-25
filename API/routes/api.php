@@ -19,7 +19,10 @@ Route::post('login',[\App\Http\Controllers\auth\LoginController::class, 'login']
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware('auth:sanctum')->get('/user/{id}/ships',[\App\Http\Controllers\UserShipController::class, 'show']);
+
+Route::middleware('auth:sanctum')->get('/saves',[\App\Http\Controllers\SaveController::class, 'index']);
 
 Route::middleware('auth:sanctum')->post('/ships',[\App\Http\Controllers\ShipController::class, 'create']);
 Route::middleware('auth:sanctum')->get('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'show']);

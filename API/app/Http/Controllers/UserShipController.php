@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Ship;
 use App\Models\SaveGame;
 use Illuminate\Http\Request;
 
@@ -25,9 +26,10 @@ class UserShipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $user = User::find($id);
-        return $user->ships;
+        return Ship::whereHas('savegame', function($q) {
+            $q->where('online', '0');
+        })->where('userID', '=', $id)->get();
     }
 }

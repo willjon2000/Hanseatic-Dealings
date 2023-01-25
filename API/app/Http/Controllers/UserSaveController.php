@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SaveGame;
+use App\Models\Ship;
 use App\Http\Requests\StoreSaveRequest;
 use App\Http\Requests\UpdateSaveRequest;
 use Illuminate\Http\Request;
 
-class SaveController extends Controller
+class UserSaveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,9 @@ class SaveController extends Controller
      */
     public function index(Request $request)
     {
-        $saves = SaveGame::get()->where('online', '1');
-        return $saves;
+        return Ship::whereHas('savegame', function($q) {
+            $q->where('online', '1');
+        })->where('userID', '=', $request->user()->id)->get();
     }
 
     /**

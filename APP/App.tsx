@@ -13,6 +13,8 @@ import { signIn, signOut } from './store/authSlice'
 
 import SignIn from './screens/SignIn'
 import Menu from './screens/Menu'
+import SaveSingleplayer from './screens/Save/Singleplayer'
+import SaveMultiplayer from './screens/Save/Multiplayer'
 import Map from './screens/Map'
 import Trade from './screens/Trade'
 
@@ -62,6 +64,8 @@ export default function App() {
           ) : (
             <>
               <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false, gestureEnabled: false }} />
+              <Stack.Screen name="SaveSingleplayer" component={SaveSingleplayer} options={{ headerShown: false, gestureEnabled: false }} />
+              <Stack.Screen name="SaveMultiplayer" component={SaveMultiplayer} options={{ headerShown: false, gestureEnabled: false }} />
               <Stack.Screen name="Map" component={Map} options={{ headerShown: false, gestureEnabled: false }} />
               <Stack.Screen name="Trade" component={Trade} options={{ headerShown: false }} />
             </>

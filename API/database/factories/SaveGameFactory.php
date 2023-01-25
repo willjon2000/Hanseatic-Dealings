@@ -19,7 +19,7 @@ class SaveGameFactory extends Factory
         return [
             'name' => fake()->unique()->name(),
             'online' => fake()->randomElement([true, true, true, true]),
-            'timeInGame' => fake()->dateTimeBetween(100,900)
+            'timeInGame' => fake()->dateTimeBetween(0, 0)
         ];
     }
 }

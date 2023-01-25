@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, SafeAreaView, Button, View, TouchableOpacity, ScrollView} from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
-import axios from "axios/index";
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 export default function Trade({ route, navigation }: NativeStackScreenProps<any>) {
+    const { token } = useSelector((state: any) => state.auth)
+
     let [outpostItems,setOutpostItems] = useState([])
     let [ship,setShips] = useState({id: 0,name: "", capacity: 0, coins: 0})
     let [shipItems, setShipItems] = useState([])
@@ -12,21 +15,21 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
     var [shipCapacity, setShipCapacity] = useState(0)
 
     useEffect(() => {
-        axios.get(`http://10.130.54.86:8000/api/outpost/${route.params.id}/items`,{ headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 1|BlVKkiDXDbnX0IrxIkglEbEjXt5cKUXHawege7Oy' } }).then(async res => {
+        axios.get(`http://10.130.54.54:8000/api/outpost/${route.params.id}/items?save=${route.params.save}`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setOutpostItems(res.data)
-        })
-        axios.get(`http://10.130.54.86:8000/api/ship/3`,{ headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 1|BlVKkiDXDbnX0IrxIkglEbEjXt5cKUXHawege7Oy' } }).then(async res => {
+        }).catch(err => console.log(err))
+        axios.get(`http://10.130.54.54:8000/api/ship/${route.params.ship}`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setShips(res.data)
-        })
-        axios.get(`http://10.130.54.86:8000/api/ship/3/items`,{ headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 1|BlVKkiDXDbnX0IrxIkglEbEjXt5cKUXHawege7Oy' } }).then(async res => {
+        }).catch(err => console.log(err))
+        axios.get(`http://10.130.54.54:8000/api/ship/${route.params.ship}/items`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setShipItems(res.data)
 
             let total = 0
             res.data.forEach(item => {
-                total += item.pivot.amount
+                total += Number(item.pivot.amount)
             })
             setShipCapacity(total)
-        })
+        }).catch(err => console.log(err))
     }, [])
 
     const buySellItems = (action, item) => {
@@ -44,15 +47,15 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
             }
         }
 
-        axios.post(`http://10.130.54.86:8000/api/outpost/${route.params.id}/item/${item.id}/${action}`,
+        axios.post(`http://10.130.54.54:8000/api/outpost/${route.params.id}/item/${item.id}/${action}?save=${route.params.save}`,
             {'amount': amount, 'shipId': ship.id},
-            { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 1|BlVKkiDXDbnX0IrxIkglEbEjXt5cKUXHawege7Oy' } }).then(async res => {
+            { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setShips(res.data.ship)
             setShipItems(res.data.shipItems)
             setOutpostItems(res.data.outpostItems)
             let total = 0
             res.data.shipItems.forEach(item => {
-                total += item.pivot.amount
+                total += Number(item.pivot.amount)
             })
             setShipCapacity(total)
 

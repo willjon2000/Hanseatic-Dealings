@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->integer('coins');
             $table->integer('capacity');
+            $table->dateTime('arrivalTime');
             $table->foreignId('userID')->constrained('users');
             $table->foreignId('saveGameID')->constrained('save_games');
+            $table->foreignId('outpostID')->constrained('outposts')->nullable(true);
             $table->timestamps();
         });
     }

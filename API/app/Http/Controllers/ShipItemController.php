@@ -20,7 +20,7 @@ class ShipItemController extends Controller
     {
         $ship = Ship::find($id);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);

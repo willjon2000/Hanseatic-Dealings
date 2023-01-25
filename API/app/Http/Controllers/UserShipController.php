@@ -26,10 +26,10 @@ class UserShipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request)
     {
         return Ship::whereHas('savegame', function($q) {
             $q->where('online', '0');
-        })->where('userID', '=', $id)->get();
+        })->where('userID', '=', $request->user()->id)->with('savegame')->get();
     }
 }

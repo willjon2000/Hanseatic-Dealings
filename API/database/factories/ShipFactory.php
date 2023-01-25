@@ -20,6 +20,7 @@ class ShipFactory extends Factory
             'name' => fake()->unique()->name(),
             'capacity' => fake()->numberBetween(200, 300),
             'coins' => fake()->numberBetween(500, 1000),
+            'arrivalTime' => fake()->dateTimeBetween(0, 0)
         ];
     }
 }

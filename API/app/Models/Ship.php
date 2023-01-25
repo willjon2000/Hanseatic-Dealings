@@ -15,7 +15,8 @@ class Ship extends Model
     protected $fillable = [
       'name',
       'capacity',
-      'coins'
+      'coins',
+      'arrivalTime'
     ];
 
     public function user(): BelongsTo
@@ -31,5 +32,10 @@ class Ship extends Model
     public function saveGame(): BelongsTo
     {
         return $this->belongsTo(SaveGame::class,'saveGameID');
+    }
+
+    public function outpost(): BelongsTo
+    {
+        return  $this->belongsTo(Outpost::class, 'outpostID');
     }
 }

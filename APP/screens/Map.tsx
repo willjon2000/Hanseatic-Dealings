@@ -1,30 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Image, SafeAreaView, Modal, TouchableOpacity, Text, View } from 'react-native'
+import { StyleSheet, Image, SafeAreaView, Modal, TouchableOpacity, Text, View, Alert } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { hideAsync } from 'expo-splash-screen'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { StatusBar } from 'expo-status-bar'
-import { Circle, Text as SvgText, TextPath, TSpan, G, Svg } from 'react-native-svg'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 export default function Map({ route, navigation }: NativeStackScreenProps<any>) {
+  const { token } = useSelector((state: any) => state.auth)
+
   let [visible, setVisible] = useState(true)
+  let [date, setDate] = useState(new Date(route.params.date))
   const outpostClick = (id: number) => {
-    setVisible(false)
-    // TODO: Insert logic for cooldown and server calls
-    navigation.push('Trade', { id })
+    
+    axios.get(`http://10.130.54.54:8000/api/ship/${route.params.ship}/outpost/${id}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+      if(res.data.success){
+        navigation.push('Trade', { id, ship: route.params.ship, save: route.params.save })
+        
+        setVisible(false)
+      }else
+        Alert.alert('Time MUST pass', 'You have to wait one month before you can sail to another outpost', [
+          {
+            text: 'Ok',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          }
+        ]);
+    })
+    
+    
   }
 
   useEffect(() => {
+    let timeInterval
     const focusHandler = navigation.addListener('focus', () => {
       hideAsync().catch(err => {})
       setVisible(true)
+
+      if(!timeInterval)
+        timeInterval = setInterval(() => {
+          date.setHours(date.getHours() + 2, 0, 0, 0)
+          setDate(new Date(date))
+        }, 200)
     })
 
     return () => {
       focusHandler()
+      if(timeInterval)
+        clearInterval(timeInterval)
     }
   }, [])
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,7 +91,10 @@ export default function Map({ route, navigation }: NativeStackScreenProps<any>) 
           }} />
           <View style={{ position: 'absolute', top: '5%', right: '5%' }}>
             <Image source={require('../assets/scroll.png')} />
-            <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>Hello, World!</Text>
+            <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Okt','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: '15%', right: '5%' }}>
+              <Text style={{ color: 'white', fontSize: 13 }}>Go back</Text>
+            </TouchableOpacity>
           </View>
           {/*<Text style={{ position: 'absolute', color: 'white', top: '5%', right: '4%', fontSize: 10 }}>Hello, World!</Text>*/}
       </Modal>

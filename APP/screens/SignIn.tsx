@@ -22,7 +22,7 @@ export default function SignIn({ route, navigation }: NativeStackScreenProps<any
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={(data) => {
-            axios.post(`http://10.130.64.55:8000/api/login`, data, { headers: { 'Accept': 'application/json' } }).then(async res => {
+            axios.post(`http://10.130.54.54:8000/api/login`, data, { headers: { 'Accept': 'application/json' } }).then(async res => {
               setItemAsync('accessToken', res.data.token)
               dispatch(signIn(res.data.token))
             }).catch(err => axiosErrorHandler(err))

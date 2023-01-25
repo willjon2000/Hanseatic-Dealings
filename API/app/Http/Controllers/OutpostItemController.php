@@ -43,22 +43,25 @@ class OutpostItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $response = [];
 
         $items = Outpost::find($id)->items;
         foreach ($items as $key => $item) {
-            array_push($response, [
-                'id' => $item->id,
-                'name' => $item->name,
-                'amount' => $item->pivot->amount,
-                'export' => $item->pivot->producer == 1,
-                'price' => [
-                    'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
-                    'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
-                ]
-            ]);
+            if($item->pivot->saveGameID == $request->input('save'))
+                array_push($response, [
+                    //'save' => $item->pivot->saveGameID,
+                    //'save_request' => $request->input('save'),
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'amount' => $item->pivot->amount,
+                    'export' => $item->pivot->producer == 1,
+                    'price' => [
+                        'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
+                        'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
+                    ]
+                ]);
         }
 
         return $response;
@@ -90,7 +93,7 @@ class OutpostItemController extends Controller
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
@@ -119,12 +122,12 @@ class OutpostItemController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         
         $buyPrice = calculateBuyPrice($item["price"], $item["pivot"]["amount"], $item["pivot"]["producer"] == 1);
-        if($ship->coins < $buyPrice)
+        if($ship->coins < ($buyPrice * $request->input('amount')))
             return response([
                 'message' => 'The ships does not have enough coins'
             ], Response::HTTP_BAD_REQUEST);
         
-        $ship->coins = $ship->coins - $buyPrice;
+        $ship->coins = $ship->coins - ($buyPrice * $request->input('amount'));
         $ship->save();
 
         $shipItem = array_column($shipItems, null, 'id')[$item_id] ?? null;
@@ -150,16 +153,17 @@ class OutpostItemController extends Controller
 
         $items = Outpost::find($id)->items;
         foreach ($items as $key => $item) {
-            array_push($outpostItemsRes, [
-                'id' => $item->id,
-                'name' => $item->name,
-                'amount' => $item->pivot->amount,
-                'export' => $item->pivot->producer == 1,
-                'price' => [
-                    'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
-                    'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
-                ]
-            ]);
+            if($item->pivot->saveGameID == $request->input('save'))
+                array_push($outpostItemsRes, [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'amount' => $item->pivot->amount,
+                    'export' => $item->pivot->producer == 1,
+                    'price' => [
+                        'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
+                        'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
+                    ]
+                ]);
         }
 
         return [ 
@@ -195,7 +199,7 @@ class OutpostItemController extends Controller
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
@@ -229,7 +233,7 @@ class OutpostItemController extends Controller
                 'message' => 'The ships does not have enough coins'
             ], Response::HTTP_BAD_REQUEST);*/
         
-        $ship->coins = $ship->coins + $sellPrice;
+        $ship->coins = $ship->coins + ($sellPrice * $request->input('amount'));
         $ship->save();
         
         foreach ($ship->items as $key => $item) {
@@ -250,16 +254,17 @@ class OutpostItemController extends Controller
 
         $items = Outpost::find($id)->items;
         foreach ($items as $key => $item) {
-            array_push($outpostItemsRes, [
-                'id' => $item->id,
-                'name' => $item->name,
-                'amount' => $item->pivot->amount,
-                'export' => $item->pivot->producer == 1,
-                'price' => [
-                    'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
-                    'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
-                ]
-            ]);
+            if($item->pivot->saveGameID == $request->input('save'))
+                array_push($outpostItemsRes, [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'amount' => $item->pivot->amount,
+                    'export' => $item->pivot->producer == 1,
+                    'price' => [
+                        'buy' => calculateBuyPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1),
+                        'sell' => calculateSellPrice($item->price, $item->pivot->amount, $item->pivot->producer == 1)
+                    ]
+                ]);
         }
 
         return [ 

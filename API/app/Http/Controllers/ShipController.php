@@ -40,14 +40,15 @@ class ShipController extends Controller
         }
 
 
-
         $ship = new Ship();
 
         $ship->userID = $request->user()->id;
         $ship->saveGameID = $save->id;
-        $ship->name = $request->input('name');
+        $ship->outpostID = 1;
+        $ship->name = fake()->name();
         $ship->capacity = fake()->numberBetween(200, 300);
         $ship->coins = fake()->numberBetween(500, 900);
+        $ship->arrivalTime = '1970-01-01 00:00:00';
         
         $ship->save();
 
@@ -65,12 +66,42 @@ class ShipController extends Controller
     {
         $ship = Ship::find($id);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
 
         return $ship;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $id
+     * @param  int  $outpost_id
+     * @return \Illuminate\Http\Response
+     */
+    public function outpost(Request $request, $id, $outpost_id)
+    {
+        $ship = Ship::find($id);
+
+        if($request->user()->id != $ship->userID)
+            return response([
+                'message' => 'You do not have access to performe this action'
+            ], Response::HTTP_UNAUTHORIZED);
+
+        if($ship->outpostID != $outpost_id && strtotime($ship->arrivalTime . '+1 month') > strtotime($ship->savegame->timeInGame))
+            return response([ 'success' => false ]);
+        
+        if($ship->outpostID != $outpost_id){
+            $ship->arrivalTime = $ship->savegame->timeInGame;
+            $ship->outpostID = $outpost_id;
+
+            $ship->save();
+        }
+
+        return response([ 'success' => true ]);
     }
 
     /**
@@ -88,7 +119,7 @@ class ShipController extends Controller
 
         $ship = Ship::find($id);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
@@ -111,7 +142,7 @@ class ShipController extends Controller
     {
         $ship = Ship::find($id);
 
-        if($request->user()->id !== $ship->userID)
+        if($request->user()->id != $ship->userID)
             return response([
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);

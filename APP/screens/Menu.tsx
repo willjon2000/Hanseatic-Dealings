@@ -1,12 +1,36 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, SafeAreaView, Animated, Easing, ImageBackground, View, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { deleteItemAsync } from 'expo-secure-store'
 import { StatusBar } from 'expo-status-bar'
 import { hideAsync } from 'expo-splash-screen'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+
+import store from '../store'
+import { signOut } from '../store/authSlice'
 
 const backgroundImage = require('../assets/big_map.png')
 
-export default function Trade({ route, navigation }: NativeStackScreenProps<any>) {
+export default function Menu({ route, navigation }: NativeStackScreenProps<any>) {
+  const { token } = useSelector((state: any) => state.auth)
+
+  let [user, setUser] = useState<any>({})
+
+  useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      hideAsync().catch(err => {})
+
+      axios.get(`http://10.130.54.54:8000/api/user`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+        setUser(res.data)
+      })
+    })
+
+    return () => {
+      focusHandler()
+    }
+  }, [])
+
   /*const initialValue = 0;
   const translateValue = useRef(new Animated.Value(initialValue)).current;
   
@@ -33,19 +57,25 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
   const AnimetedImage = Animated.createAnimatedComponent(ImageBackground);
 */
   hideAsync()
+  
+  const signOutFunc = () => {
+    deleteItemAsync('accessToken').then(() => {
+      store.dispatch(signOut())
+    })
+  }
 
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
-        <View style={{ backgroundColor: '#fff', padding: 10, marginBottom: 30, borderRadius: 5 }}><Text>USERNAME</Text></View>
-        <TouchableOpacity onPress={() => navigation.navigate('Map')} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 20 }}>
+        <View style={{ backgroundColor: '#fff', padding: 10, marginBottom: 30, borderRadius: 5 }}><Text>{user.username}</Text></View>
+        <TouchableOpacity onPress={() => navigation.navigate('SaveSingleplayer', { user })} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 20 }}>
           <Text style={{ fontSize: 30 }}>Singleplayer</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 100 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('SaveMultiplayer', { user })}  style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 100 }}>
           <Text style={{ fontSize: 30 }}>Multiplayer</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10 }}>
-          <Text style={{ fontSize: 30 }}>Settings</Text>
+        <TouchableOpacity onPress={signOutFunc} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10 }}>
+          <Text style={{ fontSize: 30 }}>Sign out</Text>
         </TouchableOpacity>
       </SafeAreaView>
       {/*<AnimetedImage

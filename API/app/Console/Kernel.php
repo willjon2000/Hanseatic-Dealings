@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\Outpost;
+use App\Models\SaveGame;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,6 +19,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
+            $output = new ConsoleOutput();
             $outposts = Outpost::all();
             foreach ($outposts as $key => $outpost) {
                 $outpostItems = $outpost->items;
@@ -34,6 +37,21 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->everyFiveMinutes();
+
+        
+        $schedule->call(function () {
+            $output = new ConsoleOutput();
+            for ($i=0; $i < 60; $i++) {
+                $saves = SaveGame::all();
+                // Add 12 hours to ingame time
+                foreach ($saves as $key => $save) {
+                    $save->timeInGame = date('Y-m-d H:i:s', strtotime($save->timeInGame . '+12 hours'));
+
+                    $save->save();
+                }
+                sleep(1);
+            }
+        })->everyMinute();
     }
 
     /**

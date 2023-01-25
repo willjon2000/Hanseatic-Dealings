@@ -20,13 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/user/{id}/ships',[\App\Http\Controllers\UserShipController::class, 'show']);
+Route::middleware('auth:sanctum')->get('/user/ships',[\App\Http\Controllers\UserShipController::class, 'show']);
 
 Route::middleware('auth:sanctum')->get('/saves',[\App\Http\Controllers\SaveController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/user/saves',[\App\Http\Controllers\UserSaveController::class, 'index']);
 
 Route::middleware('auth:sanctum')->post('/ships',[\App\Http\Controllers\ShipController::class, 'create']);
 Route::middleware('auth:sanctum')->get('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/ship/{id}/items',[\App\Http\Controllers\ShipItemController::class, 'show']);
+Route::middleware('auth:sanctum')->get('/ship/{id}/outpost/{outpost_id}',[\App\Http\Controllers\ShipController::class, 'outpost']);
 
 Route::middleware('auth:sanctum')->get('/items',[\App\Http\Controllers\ItemController::class, 'index']);
 

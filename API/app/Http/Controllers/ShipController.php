@@ -25,7 +25,7 @@ class ShipController extends Controller
             $save = new SaveGame();
             $save->name = 'private';
             $save->online = false;
-            $save->timeInGame = fake()->dateTimeBetween(100,900);
+            $save->timeInGame = '1970-01-01 00:00:00';
 
             $save->save();
 
@@ -48,7 +48,7 @@ class ShipController extends Controller
         $ship->name = fake()->name();
         $ship->capacity = fake()->numberBetween(200, 300);
         $ship->coins = fake()->numberBetween(2000, 4000);
-        $ship->arrivalTime = '1970-01-01 00:00:00';
+        $ship->arrivalTime = '1969-01-01 00:00:00';
         
         $ship->save();
 

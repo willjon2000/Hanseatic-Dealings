@@ -12,16 +12,22 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
   let [saves, setSaves] = useState<any>([])
 
   useEffect(() => {
+    let timeInterval
     const focusHandler = navigation.addListener('focus', () => {
       hideAsync().catch(err => {})
 
-      axios.get(`http://10.130.54.54:8000/api/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
-        setSaves(res.data)
-      })
+      timeInterval = setInterval(() => {
+        axios.get(`http://10.130.54.54:8000/api/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+          setSaves(res.data)
+        })
+      }, 60000)
     })
 
     return () => {
       focusHandler()
+
+      if(timeInterval)
+        clearInterval(timeInterval)
     }
   }, [])
 
@@ -29,7 +35,6 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
     if(!save) return
 
     axios.get(`http://10.130.54.54:8000/api/user/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
-      console.log(res.data)
       let userShip = res.data.find(i => i.saveGameID == save.id)
 
       if(userShip)
@@ -44,32 +49,6 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
     
   }
 
-  const saveLongPress = (save, i) => {
-    if(!save) return
-
-    Alert.alert('Remove this save?', 'Are you sure you want to delete this save', [
-      {
-        text: 'No',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel'
-      },
-      { 
-        text: 'Yes', 
-        onPress: () => {
-          saves.splice(i, 1)
-          let newSaves = JSON.parse(JSON.stringify(saves))
-          setTimeout(() => setSaves(newSaves), 250)
-          /*axios.delete(`http://10.130.54.54:8000/api/ship/${save.id}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
-            saves.splice(i, 1)
-            let newSaves = JSON.parse(JSON.stringify(saves))
-            setTimeout(() => setSaves(newSaves), 250)
-          })*/
-        } 
-      }
-    ])
-
-  }
-
   const displayDate = (date: string) => {
     let d = new Date(date)
 
@@ -78,7 +57,7 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
 
   return (
     <SafeAreaView style={styles.container}>
-      {saves.map((save, i) => <TouchableOpacity onLongPress={() => saveLongPress(saves[0], 0)} onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 40, marginBottom: 20, borderRadius: 10, alignItems: 'center' }}>
+      {saves.map((save, i) => <TouchableOpacity onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 40, marginBottom: 20, borderRadius: 10, alignItems: 'center' }}>
         <Text style={{ fontSize: 16 }}>{save.name || 'N/A'}</Text>
         <Text style={{ fontSize: 13 }}>{displayDate(save.timeInGame)}</Text>
       </TouchableOpacity>)}

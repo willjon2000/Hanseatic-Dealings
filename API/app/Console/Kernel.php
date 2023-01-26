@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
                     $item->save();
                 }
             }
-        })->everyFiveMinutes();
+        })->everyMinute();
 
         
         $schedule->call(function () {

@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user/saves',[\App\Http\Controllers\User
 
 Route::middleware('auth:sanctum')->post('/ships',[\App\Http\Controllers\ShipController::class, 'create']);
 Route::middleware('auth:sanctum')->get('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'show']);
+Route::middleware('auth:sanctum')->delete('/ship/{id}',[\App\Http\Controllers\ShipController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/ship/{id}/items',[\App\Http\Controllers\ShipItemController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/ship/{id}/outpost/{outpost_id}',[\App\Http\Controllers\ShipController::class, 'outpost']);
 

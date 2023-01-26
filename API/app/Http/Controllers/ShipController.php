@@ -142,7 +142,7 @@ class ShipController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($request,$id)
+    public function destroy(Request $request, $id)
     {
         $ship = Ship::find($id);
 
@@ -151,7 +151,8 @@ class ShipController extends Controller
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
 
-        $ship->destroy();
+        $ship->items()->detach();
+        $ship->delete();
 
         return response([ 'success' => true ]);
     }

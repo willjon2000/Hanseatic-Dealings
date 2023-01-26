@@ -29,7 +29,8 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
     if(!save) return
 
     axios.get(`http://10.130.54.54:8000/api/user/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
-      let userShip = res.data.find(i => i.savegame.id == save.id)
+      console.log(res.data)
+      let userShip = res.data.find(i => i.saveGameID == save.id)
 
       if(userShip)
         navigation.navigate('Map', { ship: userShip.id, save: save.id, date: save.timeInGame })
@@ -38,7 +39,7 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
           navigation.navigate('Map', { ship: res.data.id, save: res.data.saveGameID, date: res.data.savegame.timeInGame })
         })
       }
-    })
+    }).catch(err => console.log(err))
     
     
   }

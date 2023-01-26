@@ -46,6 +46,7 @@ class ShipController extends Controller
         $ship->saveGameID = $save->id;
         $ship->outpostID = 1;
         $ship->name = fake()->name();
+        $ship->lvl = 1;
         $ship->capacity = fake()->numberBetween(200, 300);
         $ship->coins = fake()->numberBetween(2000, 4000);
         $ship->arrivalTime = '1969-01-01 00:00:00';

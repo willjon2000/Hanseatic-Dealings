@@ -18,6 +18,7 @@ class ShipFactory extends Factory
     {
         return [
             'name' => fake()->unique()->name(),
+            'lvl' => 1,
             'capacity' => fake()->numberBetween(200, 300),
             'coins' => fake()->numberBetween(500, 1000),
             'arrivalTime' => fake()->dateTimeBetween(0, 0)

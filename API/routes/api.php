@@ -31,6 +31,9 @@ Route::middleware('auth:sanctum')->delete('/ship/{id}',[\App\Http\Controllers\Sh
 Route::middleware('auth:sanctum')->get('/ship/{id}/items',[\App\Http\Controllers\ShipItemController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/ship/{id}/outpost/{outpost_id}',[\App\Http\Controllers\ShipController::class, 'outpost']);
 
+Route::middleware('auth:sanctum')->get('/ship/{id}/upgrade',[\App\Http\Controllers\ShipUpgradeController::class, 'view']);
+Route::middleware('auth:sanctum')->put('/ship/{id}/upgrade',[\App\Http\Controllers\ShipUpgradeController::class, 'update']);
+
 Route::middleware('auth:sanctum')->get('/items',[\App\Http\Controllers\ItemController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/outposts',[\App\Http\Controllers\OutpostController::class, 'index']);

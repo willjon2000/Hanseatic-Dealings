@@ -14,6 +14,7 @@ class Ship extends Model
 
     protected $fillable = [
       'name',
+      'lvl',
       'capacity',
       'coins',
       'arrivalTime'

@@ -28,8 +28,12 @@ export default function Map({ route, navigation }: NativeStackScreenProps<any>) 
           }
         ]);
     })
+  }
+
+  const upgradeScreen = () => {
+    setVisible(false)
     
-    
+    navigation.push('Upgrade', { ship: route.params.ship })
   }
 
   useEffect(() => {
@@ -89,6 +93,11 @@ export default function Map({ route, navigation }: NativeStackScreenProps<any>) 
               </>
             )
           }} />
+          <View style={{ position: 'absolute', top: '6%', left: '5%' }}>
+            <TouchableOpacity onPress={upgradeScreen} >
+              <Text style={{ color: 'white', fontSize: 13 }}>Upgrade</Text>
+            </TouchableOpacity>
+          </View>
           <View style={{ position: 'absolute', top: '5%', right: '5%' }}>
             <Image source={require('../assets/scroll.png')} />
             <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>

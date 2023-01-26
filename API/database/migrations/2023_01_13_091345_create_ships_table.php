@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('ships', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('lvl');
             $table->integer('coins');
             $table->integer('capacity');
             $table->dateTime('arrivalTime');

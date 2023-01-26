@@ -12,6 +12,7 @@ import store from './store'
 import { signIn, signOut } from './store/authSlice'
 
 import SignIn from './screens/SignIn'
+import SignUp from './screens/SignUp'
 import Menu from './screens/Menu'
 import SaveSingleplayer from './screens/Save/Singleplayer'
 import SaveMultiplayer from './screens/Save/Multiplayer'
@@ -60,6 +61,7 @@ export default function App() {
           {!signedIn ? (
             <>
               <Stack.Screen name="SignIn" component={SignIn} options={{ title: "Sign in" }} />
+              <Stack.Screen name="SignUp" component={SignUp} options={{ title: "Sign up" }} />
             </>
           ) : (
             <>

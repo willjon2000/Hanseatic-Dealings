@@ -6,15 +6,10 @@ import { StatusBar } from 'expo-status-bar'
 import { Formik } from 'formik'
 import { showMessage } from 'react-native-flash-message'
 import axios from 'axios'
-import { setItemAsync } from 'expo-secure-store'
-import { useDispatch } from 'react-redux'
-import { signIn } from '../store/authSlice'
 
 import axiosErrorHandler from '../utils/axios.errorHandler'
 
-export default function SignIn({ route, navigation }: NativeStackScreenProps<any>) {
-    const dispatch = useDispatch()
-
+export default function SignUp({ route, navigation }: NativeStackScreenProps<any>) {
     hideAsync()
 
     return (
@@ -24,8 +19,8 @@ export default function SignIn({ route, navigation }: NativeStackScreenProps<any
                     initialValues={{ username: '', password: '' }}
                     onSubmit={(data) => {
                         axios.post(`http://10.130.54.54:8000/api/register`, data, { headers: { 'Accept': 'application/json' } }).then(async res => {
-                            navigation.push('Sign In')
-                            showMessage({message: 'account has been created', type: "success"})
+                            navigation.push('SignIn')
+                            showMessage({message: 'Account has been created', type: "success"})
                         }).catch(err => axiosErrorHandler(err))
                     }}
                 >

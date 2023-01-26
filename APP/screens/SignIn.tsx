@@ -45,6 +45,10 @@ export default function SignIn({ route, navigation }: NativeStackScreenProps<any
               secureTextEntry={true}
             />
             <Button onPress={() => handleSubmit()} title="Sign in"/>
+            
+            <View style={{marginTop: 10}}>
+              <Button onPress={() => navigation.push('SignUp')} title="No account? Sign Up"/>
+            </View>
           </View>
         )}
         </Formik>

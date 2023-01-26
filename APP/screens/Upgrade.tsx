@@ -45,6 +45,7 @@ export default function Menu({ route, navigation }: NativeStackScreenProps<any>)
       <SafeAreaView style={styles.container}>
         <Text style={{ color: '#fff', marginBottom: 10 }}>Upgrade price: {upgrade.price}</Text>
         <Text style={{ color: '#fff', marginBottom: 10 }}>Ship coins: {ship.coins}</Text>
+        <Text style={{ color: '#fff', marginBottom: 10 }}>Ship lvl: {ship.lvl}</Text>
         <TouchableOpacity onPress={upgradeClick} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
           <Text style={{ fontSize: 16 }}>UPGRADE!</Text>
         </TouchableOpacity>

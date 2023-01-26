@@ -52,6 +52,8 @@ class ShipController extends Controller
         
         $ship->save();
 
+        $ship->savegame;
+
         return $ship;
     }
 
@@ -71,6 +73,8 @@ class ShipController extends Controller
                 'message' => 'You do not have access to performe this action'
             ], Response::HTTP_UNAUTHORIZED);
 
+        $ship->savegame;
+        
         return $ship;
     }
 

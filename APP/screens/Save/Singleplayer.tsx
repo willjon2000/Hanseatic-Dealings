@@ -38,7 +38,7 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
           onPress: () => {
             axios.post(`http://10.130.54.54:8000/api/ships`, { }, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
               navigation.navigate('Map', { ship: res.data.id, save: res.data.saveGameID, date: res.data.savegame.timeInGame })
-            })
+            }).catch(err => console.log(err))
           } 
         }
       ])

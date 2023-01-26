@@ -26,10 +26,21 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
   }, [])
 
   const saveClick = (save) => {
-    if(!save)
-      console.log("AAA")
+    if(!save) return
+
+    axios.get(`http://10.130.54.54:8000/api/user/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+      let userShip = res.data.find(i => i.savegame.id == save.id)
+
+      if(userShip)
+        navigation.navigate('Map', { ship: userShip.id, save: save.id, date: save.timeInGame })
+      else{
+        axios.post(`http://10.130.54.54:8000/api/ships`, { saveGameID: save.id }, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+          navigation.navigate('Map', { ship: res.data.id, save: res.data.saveGameID, date: res.data.savegame.timeInGame })
+        })
+      }
+    })
     
-    navigation.navigate('Map', { ship: save?.id, save: save?.saveId })
+    
   }
 
   const saveLongPress = (save, i) => {

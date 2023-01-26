@@ -47,7 +47,7 @@ class ShipController extends Controller
         $ship->outpostID = 1;
         $ship->name = fake()->name();
         $ship->capacity = fake()->numberBetween(200, 300);
-        $ship->coins = fake()->numberBetween(500, 900);
+        $ship->coins = fake()->numberBetween(2000, 4000);
         $ship->arrivalTime = '1970-01-01 00:00:00';
         
         $ship->save();

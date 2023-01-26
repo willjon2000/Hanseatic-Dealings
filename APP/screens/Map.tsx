@@ -93,15 +93,15 @@ export default function Map({ route, navigation }: NativeStackScreenProps<any>) 
               </>
             )
           }} />
-          <View style={{ position: 'absolute', top: '6%', left: '5%' }}>
+          <View style={ styles.upgradeView }>
             {Platform.OS == 'ios' && <TouchableOpacity onPress={upgradeScreen} >
               <Text style={{ color: 'white', fontSize: 13 }}>Upgrade</Text>
             </TouchableOpacity>}
           </View>
-          <View style={{ position: 'absolute', top: '5%', right: '5%' }}>
+          <View style={ styles.scrollView }>
             <Image source={require('../assets/scroll.png')} />
-            {Platform.OS == 'ios' && <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>}
-            {Platform.OS !== 'ios' && <TouchableOpacity style={{ position: 'absolute', top: '22%', left: '10%' }} onPress={upgradeScreen} >
+            {Platform.OS == 'ios' && <Text style={ styles.dateText }>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>}
+            {Platform.OS !== 'ios' && <TouchableOpacity style={ styles.upgrade } onPress={upgradeScreen} >
               <Text style={{ color: 'white', fontSize: 13 }}>Upgrade</Text>
             </TouchableOpacity>}
             <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: '15%', right: '5%' }}>
@@ -129,5 +129,29 @@ const styles = StyleSheet.create({
     height: 20,
     position: 'absolute',
     transform: [{ translateX: -10 }, { translateY: -10 }]
-  }
+  },
+
+    upgradeView: {
+        position: 'absolute', top: '6%', left: '5%'
+    },
+
+    scrollView: {
+        position: 'absolute',
+        top: '5%',
+        right: '5%'
+    },
+
+    dateText: {
+        position: 'absolute',
+        color: 'white',
+        top: '22%',
+        left: '10%',
+        fontSize: 13
+    },
+
+    upgrade: {
+        position: 'absolute',
+        top: '22%',
+        left: '10%'
+    }
 })

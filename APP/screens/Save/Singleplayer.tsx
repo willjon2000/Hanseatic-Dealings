@@ -79,13 +79,13 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: 'row', marginBottom: 20 }}>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onLongPress={() => saveLongPress(saves[0], 0)} onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
+          <TouchableOpacity onLongPress={() => saveLongPress(saves[0], 0)} onPress={() => saveClick(saves[0])} style={ styles.singlePlayerWorld }>
             <Text style={{ fontSize: 16 }}>{saves[0]?.name || 'EMPTY'}</Text>
             <Text style={{ fontSize: 13 }}>{saves[0]?.savegame.timeInGame ? displayDate(saves[0]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onLongPress={() => saveLongPress(saves[1], 1)} onPress={() => saveClick(saves[1])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
+          <TouchableOpacity onLongPress={() => saveLongPress(saves[1], 1)} onPress={() => saveClick(saves[1])} style={ styles.singlePlayerWorld }>
             <Text style={{ fontSize: 16 }}>{saves[1]?.name || 'EMPTY'}</Text>
             <Text style={{ fontSize: 13 }}>{saves[1]?.savegame.timeInGame ? displayDate(saves[1]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
@@ -93,19 +93,19 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
       </View>
       <View style={{ flexDirection: 'row', marginBottom: 20 }}>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onLongPress={() => saveLongPress(saves[2], 2)} onPress={() => saveClick(saves[2])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
+          <TouchableOpacity onLongPress={() => saveLongPress(saves[2], 2)} onPress={() => saveClick(saves[2])} style={ styles.singlePlayerWorld }>
             <Text style={{ fontSize: 16 }}>{saves[2]?.name || 'EMPTY'}</Text>
             <Text style={{ fontSize: 13 }}>{saves[2]?.savegame.timeInGame ? displayDate(saves[2]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onLongPress={() => saveLongPress(saves[3], 3)} onPress={() => saveClick(saves[3])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
+          <TouchableOpacity onLongPress={() => saveLongPress(saves[3], 3)} onPress={() => saveClick(saves[3])} style={ styles.singlePlayerWorld }>
             <Text style={{ fontSize: 16 }}>{saves[3]?.name || 'EMPTY'}</Text>
             <Text style={{ fontSize: 13 }}>{saves[3]?.savegame.timeInGame ? displayDate(saves[3]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, alignItems: 'center' }}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={ styles.backButton }>
         <Text style={{ fontSize: 20 }}>Go back</Text>
       </TouchableOpacity>
       <StatusBar style="light" />
@@ -127,5 +127,22 @@ const styles = StyleSheet.create({
     height: 20,
     position: 'absolute',
     transform: [{ translateX: -10 }, { translateY: -10 }]
+  },
+
+  singlePlayerWorld: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+    borderRadius: 10,
+    alignItems: 'center'
+  },
+
+  backButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center'
   }
 })

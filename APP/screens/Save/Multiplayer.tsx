@@ -51,11 +51,11 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
 
   return (
     <SafeAreaView style={styles.container}>
-      {saves.map((save, i) => <TouchableOpacity onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 40, marginBottom: 20, borderRadius: 10, alignItems: 'center' }}>
+      {saves.map((save, i) => <TouchableOpacity onPress={() => saveClick(saves[0])} style={ styles.multiPlayerWorld } >
         <Text style={{ fontSize: 16 }}>{save.name || 'N/A'}</Text>
         <Text style={{ fontSize: 13 }}>{displayDate(save.timeInGame)}</Text>
       </TouchableOpacity>)}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, alignItems: 'center' }}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={ styles.backButton }>
         <Text style={{ fontSize: 20 }}>Go back</Text>
       </TouchableOpacity>
       <StatusBar style="light" />
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+
   button: {
     backgroundColor: '#ffffff00',
     borderRadius: 100,
@@ -77,5 +78,22 @@ const styles = StyleSheet.create({
     height: 20,
     position: 'absolute',
     transform: [{ translateX: -10 }, { translateY: -10 }]
+  },
+
+  multiPlayerWorld: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    marginBottom: 20,
+    borderRadius: 10,
+    alignItems: 'center'
+  },
+
+  backButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center'
   }
 })

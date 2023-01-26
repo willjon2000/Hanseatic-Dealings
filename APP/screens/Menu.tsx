@@ -68,13 +68,13 @@ export default function Menu({ route, navigation }: NativeStackScreenProps<any>)
     <View style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
         <View style={{ backgroundColor: '#fff', padding: 10, marginBottom: 30, borderRadius: 5 }}><Text>{user.username}</Text></View>
-        <TouchableOpacity onPress={() => navigation.navigate('SaveSingleplayer', { user })} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 20 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('SaveSingleplayer', { user })} style={ styles.SinglePlayerButton }>
           <Text style={{ fontSize: 30 }}>Singleplayer</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('SaveMultiplayer', { user })}  style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, marginBottom: 100 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('SaveMultiplayer', { user })}  style={ styles.MultiPlayerButton }>
           <Text style={{ fontSize: 30 }}>Multiplayer</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={signOutFunc} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10 }}>
+        <TouchableOpacity onPress={signOutFunc} style={ styles.signOutButton }>
           <Text style={{ fontSize: 30 }}>Sign out</Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 2
   },
+
   background: {
     position: 'absolute',
     width: 5000,
@@ -104,5 +105,28 @@ const styles = StyleSheet.create({
     opacity: 1,
     zIndex: 1,
     transform: [ { translateX: 0 }, { translateY: 0 } ]     
+  },
+
+  SinglePlayerButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20
+  },
+
+  MultiPlayerButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 100
+  },
+
+  signOutButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10
   }
 })

@@ -46,7 +46,7 @@ export default function Menu({ route, navigation }: NativeStackScreenProps<any>)
         <Text style={{ color: '#fff', marginBottom: 10 }}>Upgrade price: {upgrade.price}</Text>
         <Text style={{ color: '#fff', marginBottom: 10 }}>Ship coins: {ship.coins}</Text>
         <Text style={{ color: '#fff', marginBottom: 10 }}>Ship lvl: {ship.lvl}</Text>
-        <TouchableOpacity onPress={upgradeClick} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
+        <TouchableOpacity onPress={upgradeClick} style={ styles.upgradeButton }>
           <Text style={{ fontSize: 16 }}>UPGRADE!</Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -62,5 +62,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2
+  },
+
+  upgradeButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    borderRadius: 10,
+    alignItems: 'center'
   }
 })

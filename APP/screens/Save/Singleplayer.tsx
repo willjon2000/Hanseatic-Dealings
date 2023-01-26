@@ -70,7 +70,7 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
   }
 
   const displayDate = (date: string) => {
-    let d = new Date(date)
+    let d = new Date(date.replace(' ', 'T'))
 
     return `${d.getDate()}. ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
   }

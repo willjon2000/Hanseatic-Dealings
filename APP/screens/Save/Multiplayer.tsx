@@ -12,22 +12,16 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
   let [saves, setSaves] = useState<any>([])
 
   useEffect(() => {
-    let timeInterval
     const focusHandler = navigation.addListener('focus', () => {
       hideAsync().catch(err => {})
 
-      timeInterval = setInterval(() => {
-        axios.get(`http://10.130.54.54:8000/api/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
-          setSaves(res.data)
-        })
-      }, 60000)
+      axios.get(`http://10.130.54.54:8000/api/saves`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+        setSaves(res.data)
+      })
     })
 
     return () => {
       focusHandler()
-
-      if(timeInterval)
-        clearInterval(timeInterval)
     }
   }, [])
 
@@ -50,7 +44,7 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
   }
 
   const displayDate = (date: string) => {
-    let d = new Date(date)
+    let d = new Date(date.replace(' ', 'T'))
 
     return `${d.getDate()}. ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
   }

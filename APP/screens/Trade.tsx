@@ -18,6 +18,13 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
         axios.get(`http://10.130.54.54:8000/api/outpost/${route.params.id}/items?save=${route.params.save}`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setOutpostItems(res.data)
         }).catch(err => console.log(err))
+
+        const timeInterval = setInterval(() => {
+            axios.get(`http://10.130.54.54:8000/api/outpost/${route.params.id}/items?save=${route.params.save}`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
+                setOutpostItems(res.data)
+            }).catch(err => console.log(err))
+        }, 60000)
+
         axios.get(`http://10.130.54.54:8000/api/ship/${route.params.ship}`, { headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } }).then(async res => {
             setShips(res.data)
         }).catch(err => console.log(err))
@@ -30,6 +37,11 @@ export default function Trade({ route, navigation }: NativeStackScreenProps<any>
             })
             setShipCapacity(total)
         }).catch(err => console.log(err))
+
+        return () => {
+            if(timeInterval)
+                clearInterval(timeInterval)
+        }
     }, [])
 
     const buySellItems = (action, item) => {

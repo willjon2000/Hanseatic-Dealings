@@ -34,7 +34,7 @@ class ShipController extends Controller
                 $randomItems = Item::all()->random(rand(4,17))->pluck('id');
                 for($i=0; $i < count($randomItems); $i++) {
                     $producer = fake()->boolean(15);
-                    $outpost->items()->attach($randomItems[$i], ["saveGameID" => $save->id, 'producer' => $producer, 'amount' => $producer ? fake()->numberBetween(10, 70) : fake()->numberBetween(80, 170)]);
+                    $outpost->items()->attach($randomItems[$i], ["saveGameID" => $save->id, 'producer' => $producer, 'amount' => $producer ? fake()->numberBetween(10, 70) : fake()->numberBetween(20, 100)]);
                 }
             }
         }

@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 function calculateBuyPrice($price, $amount, $producer) {
     if($producer)
-        $buyPrice = 1 - pow($amount / 100, 3) + $price;
+        $buyPrice = pow(($amount / 100) - 1, 3) * (-$price) + $price;
     else
-        $buyPrice = -(pow(2 * ($amount / 100) - 1, 3) * (-100) + $price);
+        $buyPrice = pow(($amount / 150) - 1, 3) * (-$price) + $price;
 
     if($buyPrice < 0)
-        $buyPrice = 0;
+        $buyPrice = 1;
     if($buyPrice > $price * 2)
         $buyPrice = $price * 2;
 
@@ -22,10 +22,12 @@ function calculateBuyPrice($price, $amount, $producer) {
 }
 
 function calculateSellPrice($price, $amount, $producer) {   
-    $sellPrice = pow(2 * ($amount / 100) - 1, 3) * (-100) + $price;
-
     if($producer)
-        $sellPrice = $sellPrice / 2;
+        $sellPrice = pow(($amount / 100) - 1, 3) * (-$price) + $price;
+    else
+        $sellPrice = pow(($amount / 150) - 1, 3) * (-$price) + $price;
+    
+    $sellPrice -= $sellPrice * 0.04;
 
     if($sellPrice < 0)
         $sellPrice = 0;

@@ -69,11 +69,17 @@ export default function SaveMultiplayer({ route, navigation }: NativeStackScreen
 
   }
 
+  const displayDate = (date: string) => {
+    let d = new Date(date)
+
+    return `${d.getDate()}. ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {saves.map((save, i) => <TouchableOpacity onLongPress={() => saveLongPress(saves[0], 0)} onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 10, paddingHorizontal: 40, marginBottom: 20, borderRadius: 10, alignItems: 'center' }}>
         <Text style={{ fontSize: 16 }}>{save.name || 'N/A'}</Text>
-        <Text style={{ fontSize: 13 }}>{save.timeInGame}</Text>
+        <Text style={{ fontSize: 13 }}>{displayDate(save.timeInGame)}</Text>
       </TouchableOpacity>)}
       <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 20, borderRadius: 10, alignItems: 'center' }}>
         <Text style={{ fontSize: 20 }}>Go back</Text>

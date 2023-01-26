@@ -91,7 +91,7 @@ export default function Map({ route, navigation }: NativeStackScreenProps<any>) 
           }} />
           <View style={{ position: 'absolute', top: '5%', right: '5%' }}>
             <Image source={require('../assets/scroll.png')} />
-            <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Okt','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>
+            <Text style={{ position: 'absolute', color: 'white', top: '22%', left: '10%', fontSize: 13 }}>{date.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()]} {date.getFullYear()} {String(date.getHours()).padStart(2, '0')}:{String(date.getMinutes()).padStart(2, '0')}</Text>
             <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: '15%', right: '5%' }}>
               <Text style={{ color: 'white', fontSize: 13 }}>Go back</Text>
             </TouchableOpacity>

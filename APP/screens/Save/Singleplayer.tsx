@@ -58,7 +58,7 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
       { 
         text: 'Yes', 
         onPress: () => {
-          axios.delete(`http://10.130.54.86:8000/api/ship/${save.id}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
+          axios.delete(`http://10.130.54.54:8000/api/ship/${save.id}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => {
             saves.splice(i, 1)
             let newSaves = JSON.parse(JSON.stringify(saves))
             setTimeout(() => setSaves(newSaves), 250)
@@ -69,19 +69,25 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
 
   }
 
+  const displayDate = (date: string) => {
+    let d = new Date(date)
+
+    return `${d.getDate()}. ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: 'row', marginBottom: 20 }}>
         <View style={{ flex: 1 }}>
           <TouchableOpacity onLongPress={() => saveLongPress(saves[0], 0)} onPress={() => saveClick(saves[0])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
             <Text style={{ fontSize: 16 }}>{saves[0]?.name || 'EMPTY'}</Text>
-            <Text style={{ fontSize: 13 }}>{saves[0]?.savegame.timeInGame || 'EMPTY'}</Text>
+            <Text style={{ fontSize: 13 }}>{saves[0]?.savegame.timeInGame ? displayDate(saves[0]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
           <TouchableOpacity onLongPress={() => saveLongPress(saves[1], 1)} onPress={() => saveClick(saves[1])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
             <Text style={{ fontSize: 16 }}>{saves[1]?.name || 'EMPTY'}</Text>
-            <Text style={{ fontSize: 13 }}>{saves[1]?.savegame.timeInGame || 'EMPTY'}</Text>
+            <Text style={{ fontSize: 13 }}>{saves[1]?.savegame.timeInGame ? displayDate(saves[1]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -89,13 +95,13 @@ export default function SaveSingleplayer({ route, navigation }: NativeStackScree
         <View style={{ flex: 1 }}>
           <TouchableOpacity onLongPress={() => saveLongPress(saves[2], 2)} onPress={() => saveClick(saves[2])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
             <Text style={{ fontSize: 16 }}>{saves[2]?.name || 'EMPTY'}</Text>
-            <Text style={{ fontSize: 13 }}>{saves[2]?.savegame.timeInGame || 'EMPTY'}</Text>
+            <Text style={{ fontSize: 13 }}>{saves[2]?.savegame.timeInGame ? displayDate(saves[2]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
           <TouchableOpacity onLongPress={() => saveLongPress(saves[3], 3)} onPress={() => saveClick(saves[3])} style={{ backgroundColor: '#fff', paddingVertical: 5, paddingHorizontal: 5, marginHorizontal: 5, borderRadius: 10, alignItems: 'center' }}>
             <Text style={{ fontSize: 16 }}>{saves[3]?.name || 'EMPTY'}</Text>
-            <Text style={{ fontSize: 13 }}>{saves[3]?.savegame.timeInGame || 'EMPTY'}</Text>
+            <Text style={{ fontSize: 13 }}>{saves[3]?.savegame.timeInGame ? displayDate(saves[3]?.savegame.timeInGame) : 'EMPTY'}</Text>
           </TouchableOpacity>
         </View>
       </View>
